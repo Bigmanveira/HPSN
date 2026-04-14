@@ -31,11 +31,13 @@ jobs:
           if [ -z "${{ secrets.FTP_PASSWORD }}" ]; then echo "FTP_PASSWORD is missing"; exit 1; fi
           if [ -z "${{ secrets.FTP_TARGET_DIR }}" ]; then echo "FTP_TARGET_DIR is missing"; exit 1; fi
 
-      - name: Deploy dist folder via FTP
+      - name: Deploy dist folder via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
           local-dir: dist/
           server-dir: ${{ secrets.FTP_TARGET_DIR }}
